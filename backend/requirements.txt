@@ -1,0 +1,56 @@
+# FastAPI Framework and Compatible Dependencies
+fastapi==0.95.2
+pydantic==1.10.13
+uvicorn[standard]==0.22.0
+python-multipart==0.0.6  # For file uploads
+
+# Core PDF Processing
+pdfplumber>=0.9.0
+PyMuPDF>=1.23.0
+
+# Machine Learning and NLP
+sentence-transformers==2.2.2
+transformers==4.40.0
+torch==2.6.0
+numpy>=1.24.0
+scikit-learn==1.5.0
+
+# Text Processing and NLP
+spacy<3.7.0
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.21.0  # For faster fuzzywuzzy operations
+
+# HTTP Requests and API Integration
+requests>=2.31.0
+
+# Environment Management
+python-dotenv>=1.0.0
+
+# Development and Testing (Optional)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Additional dependencies for enhanced functionality
+# Uncomment if you need these features:
+
+# For advanced text preprocessing
+# nltk>=3.8.1
+# textblob>=0.17.1
+
+# For data manipulation and analysis
+# pandas>=2.0.0
+
+# For visualization (if you add plotting features)
+# matplotlib>=3.7.0
+# seaborn>=0.12.0
+
+# For enhanced JSON handling
+# ujson>=5.8.0
+
+# For async operations (if you add async support)
+# aiohttp>=3.8.0
+# asyncio
+
+# System requirements for spaCy model
+# Run this command after installing requirements:
+# python -m spacy download en_core_web_sm
