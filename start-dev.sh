@@ -34,14 +34,15 @@ pip install -r requirements.txt
 
 echo "🔧 Starting backend server..."
 cd ..
-python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload &
+cd backend
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload &
 BACKEND_PID=$!
 
 echo "⏳ Waiting for backend to start..."
 sleep 5
 
 echo "🎨 Starting frontend development server..."
-cd frontend
+cd ../frontend
 npm run dev &
 FRONTEND_PID=$!
 

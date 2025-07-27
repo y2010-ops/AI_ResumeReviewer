@@ -1,28 +1,42 @@
 'use client';
 
-import { useState } from 'react';
+interface JobDescriptionInputProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
-export default function JobDescriptionInput() {
-  const [jobDescription, setJobDescription] = useState('');
-
+export default function JobDescriptionInput({ value, onChange }: JobDescriptionInputProps) {
   return (
-    <div className="mb-6">
-      <label htmlFor="job-description" className="block text-sm font-medium text-gray-700 mb-2">
+    <div className="w-full">
+      <h2 className="text-xl font-semibold text-gray-900 mb-4">
         Job Description
-      </label>
-      <textarea
-        id="job-description"
-        name="job_description"
-        rows={8}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
-        placeholder="Paste the job description here..."
-        value={jobDescription}
-        onChange={(e) => setJobDescription(e.target.value)}
-        required
-      />
-      <p className="text-xs text-gray-500 mt-1">
-        Minimum 50 characters required
-      </p>
+      </h2>
+      
+      <div className="space-y-4">
+        <div>
+          <label htmlFor="job-description" className="block text-sm font-medium text-gray-700 mb-2">
+            Paste the job description here
+          </label>
+          <textarea
+            id="job-description"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="Enter the job description, requirements, and responsibilities..."
+            className="w-full h-48 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+            required
+          />
+        </div>
+        
+        <div className="text-sm text-gray-600">
+          <p>💡 Tips for better analysis:</p>
+          <ul className="list-disc list-inside mt-2 space-y-1">
+            <li>Include specific skills and technologies required</li>
+            <li>Mention years of experience needed</li>
+            <li>Include educational requirements</li>
+            <li>Add any certifications or specializations</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 } 

@@ -11,7 +11,7 @@ call pip install -r requirements.txt
 
 echo 🔧 Starting backend server...
 cd ..
-start "Backend Server" cmd /k "python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload"
+start "Backend Server" cmd /k "cd backend && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
 
 echo ⏳ Waiting for backend to start...
 timeout /t 5 /nobreak >nul
