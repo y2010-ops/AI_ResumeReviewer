@@ -18,7 +18,8 @@ export default function Home() {
     setError(null);
     
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      // Use HF Spaces backend URL - replace with your actual URL
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://your-username-ai-resume-reviewer-backend.hf.space';
       const response = await fetch(`${apiUrl}/api/v1/match`, {
         method: 'POST',
         body: formData,
