@@ -9,7 +9,7 @@ import AnalysisResults from '@/components/AnalysisResults';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 // Define apiUrl at the top level so process.env is replaced at build time
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://yaminivj-ai-resume-reviewer.hf.space';
+const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://yaminivj-ai-resume-reviewer.hf.space').replace(/\/$/, '');
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -45,7 +45,8 @@ export default function Home() {
         console.log(`${key}:`, value);
       }
       
-      console.log('Sending request to:', `${apiUrl}/api/v1/match`);
+      const requestUrl = `${apiUrl}/api/v1/match`;
+      console.log('Sending request to:', requestUrl);
       
       // Create a new FormData to ensure clean state
       const cleanFormData = new FormData();
@@ -60,7 +61,7 @@ export default function Home() {
         lastModified: file.lastModified
       });
       
-      const response = await fetch(`${apiUrl}/api/v1/match`, {
+      const response = await fetch(requestUrl, {
         method: 'POST',
         body: cleanFormData,
         // Don't set Content-Type or Content-Length - let browser handle it for FormData
