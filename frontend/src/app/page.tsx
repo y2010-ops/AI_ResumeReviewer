@@ -20,7 +20,7 @@ export default function Home() {
     
     try {
       // Use HF Spaces backend URL - replace with your actual URL
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://your-username-ai-resume-reviewer-backend.hf.space';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://yaminivj-ai-resumereviewer.hf.space/';
       const response = await fetch(`${apiUrl}/api/v1/match`, {
         method: 'POST',
         body: formData,
