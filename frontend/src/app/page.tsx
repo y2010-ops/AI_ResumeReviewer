@@ -23,6 +23,22 @@ export default function Home() {
     setError(null);
     
     try {
+      // Validate file before sending
+      if (!file) {
+        throw new Error('No file selected');
+      }
+      
+      // Check file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      if (file.size > maxSize) {
+        throw new Error(`File too large. Maximum size is 10MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+      }
+      
+      // Check file type
+      if (file.type !== 'application/pdf') {
+        throw new Error('Only PDF files are supported');
+      }
+      
       // Debug: Log the FormData contents
       console.log('FormData contents:');
       for (const [key, value] of formData.entries()) {
@@ -31,9 +47,22 @@ export default function Home() {
       
       console.log('Sending request to:', `${apiUrl}/api/v1/match`);
       
+      // Create a new FormData to ensure clean state
+      const cleanFormData = new FormData();
+      cleanFormData.append('file', file);
+      cleanFormData.append('job_description', jobDescription);
+      
+      // Log request details
+      console.log('File details:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: file.lastModified
+      });
+      
       const response = await fetch(`${apiUrl}/api/v1/match`, {
         method: 'POST',
-        body: formData,
+        body: cleanFormData,
         // Don't set Content-Type or Content-Length - let browser handle it for FormData
       });
 
