@@ -9,7 +9,7 @@ import AnalysisResults from '@/components/AnalysisResults';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 // Define apiUrl at the top level so process.env is replaced at build time
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://yaminivj-ai-resumereviewer.hf.space/';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://yaminivj-ai-resume-reviewer.hf.space';
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);

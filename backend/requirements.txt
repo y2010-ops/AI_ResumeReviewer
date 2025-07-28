@@ -22,9 +22,7 @@ python-Levenshtein
 # HTTP and Environment
 requests
 python-dotenv
-
-# HF Spaces Interface
-gradio
+pydantic-settings
 
 # Database (Optional)
 supabase
