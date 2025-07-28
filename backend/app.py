@@ -2,32 +2,15 @@
 Hugging Face Spaces entry point for AI Resume Reviewer
 """
 import os
-import sys
 import gradio as gr
 import logging
-
-# Add the current directory to Python path for imports
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, current_dir)
+from app.main import app
+from app.embedding import CorrectedResumeJobMatcher
+import uvicorn
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-try:
-    # Try direct import first
-    from app.embedding import CorrectedResumeJobMatcher
-    logger.info("✅ Successfully imported CorrectedResumeJobMatcher")
-except ImportError as e:
-    logger.error(f"❌ Import error: {e}")
-    # Try alternative import path
-    try:
-        sys.path.insert(0, os.path.join(current_dir, 'app'))
-        from app.embedding import CorrectedResumeJobMatcher
-        logger.info("✅ Successfully imported CorrectedResumeJobMatcher (alternative path)")
-    except ImportError as e2:
-        logger.error(f"❌ Alternative import also failed: {e2}")
-        CorrectedResumeJobMatcher = None
 
 def analyze_resume(resume_file, job_description):
     """Analyze resume with job description using the full ML backend"""
@@ -37,10 +20,6 @@ def analyze_resume(resume_file, job_description):
         
         if not job_description or len(job_description.strip()) < 50:
             return "Please provide a detailed job description (at least 50 characters)."
-        
-        # Check if we have the required modules
-        if CorrectedResumeJobMatcher is None:
-            return "❌ **System Error:** ML modules not loaded. Please check the deployment."
         
         # Read file content
         with open(resume_file.name, 'rb') as f:

@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import * as React from 'react';
 import { useState } from 'react';
 import ResumeUploader from '@/components/ResumeUploader';
 import JobDescriptionInput from '@/components/JobDescriptionInput';
 import AnalysisResults from '@/components/AnalysisResults';
 import LoadingSpinner from '@/components/LoadingSpinner';
+
+// Define apiUrl at the top level so process.env is replaced at build time
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://yaminivj-ai-resumereviewer.hf.space/';
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -19,20 +23,34 @@ export default function Home() {
     setError(null);
     
     try {
-      // Use HF Spaces backend URL - replace with your actual URL
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://your-username-ai-resume-reviewer-backend.hf.space';
+      // Debug: Log the FormData contents
+      console.log('FormData contents:');
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+      
+      console.log('Sending request to:', `${apiUrl}/api/v1/match`);
+      
       const response = await fetch(`${apiUrl}/api/v1/match`, {
         method: 'POST',
         body: formData,
+        // Don't set Content-Type or Content-Length - let browser handle it for FormData
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const data = await response.json();
+      console.log('Success response:', data);
       setResults(data);
     } catch (err) {
+      console.error('Analysis error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
