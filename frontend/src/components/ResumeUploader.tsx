@@ -60,71 +60,72 @@ export default function ResumeUploader({ onFileSelect }: ResumeUploaderProps) {
 
   return (
     <div className="w-full">
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">
-        Upload Resume (PDF)
-      </h2>
-      
-      <div
-        className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-          dragActive 
-            ? 'border-blue-400 bg-blue-50' 
-            : selectedFile 
-              ? 'border-green-400 bg-green-50' 
-              : 'border-gray-300 bg-gray-50'
-        }`}
-        onDragEnter={handleDrag}
-        onDragLeave={handleDrag}
-        onDragOver={handleDrag}
-        onDrop={handleDrop}
-      >
-        <input
-          ref={inputRef}
-          type="file"
-          accept=".pdf"
-          onChange={handleFileInputChange}
-          className="hidden"
-        />
-        
-        {!selectedFile ? (
-          <div>
-            <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <p className="text-gray-600 mb-2">
-              Drag and drop your resume here, or
+      {!selectedFile ? (
+        <div
+          className={`relative border-2 border-slate-600/50 rounded-2xl p-8 text-center transition-all duration-300 bg-slate-800/50 backdrop-blur-sm ${
+            dragActive 
+              ? 'border-slate-500/60 bg-slate-700/60' 
+              : 'hover:border-slate-500/60 hover:bg-slate-700/60'
+          }`}
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            accept=".pdf"
+            onChange={handleFileInputChange}
+            className="hidden"
+          />
+          
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-6">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+            </div>
+            <p className="text-lg font-medium text-white mb-4">
+              {dragActive ? 'Drop your resume here' : 'Drag and drop your resume here'}
             </p>
+            <p className="text-slate-300 mb-6 text-sm">or</p>
             <button
               type="button"
               onClick={handleButtonClick}
-              className="text-blue-600 hover:text-blue-700 font-medium"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 font-medium"
             >
-              browse to select file
+              Choose File
             </button>
-            <p className="text-sm text-gray-500 mt-2">
-              Only PDF files are supported
-            </p>
+            <p className="text-sm text-slate-300 mt-4">Maximum file size: 10MB. Supported format: PDF</p>
           </div>
-        ) : (
-          <div>
-            <svg className="mx-auto h-12 w-12 text-green-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-green-600 font-medium mb-2">
-              {selectedFile.name}
-            </p>
-            <p className="text-sm text-gray-500 mb-4">
-              File size: {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-            </p>
+        </div>
+      ) : (
+        <div className="border-2 border-emerald-500/50 bg-emerald-900/20 rounded-2xl p-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-emerald-300 font-semibold text-lg">{selectedFile.name}</p>
+                <p className="text-sm text-emerald-400">
+                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                </p>
+              </div>
+            </div>
             <button
               type="button"
               onClick={removeFile}
-              className="text-red-600 hover:text-red-700 text-sm font-medium"
+              className="text-red-400 hover:text-red-300 text-sm font-medium hover:bg-red-900/30 px-4 py-2 rounded-xl transition-all duration-200"
             >
-              Remove file
+              Remove
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 } 

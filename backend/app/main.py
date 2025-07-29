@@ -3,6 +3,7 @@ FastAPI main application entry point for AI Resume Reviewer
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Request
 from app.routes import review
 from app.config import settings
 
@@ -34,6 +35,10 @@ async def root():
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+@app.options("/{rest_of_path:path}")
+async def preflight_handler(request: Request, rest_of_path: str):
+    return {}
 
 if __name__ == "__main__":
     import uvicorn
